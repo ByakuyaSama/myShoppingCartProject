@@ -10,7 +10,30 @@
 		        <ul ng-repeat="item in data.products">
 					<li>Name: {{item.name}}, Price: ${{item.msrpInCents/100}}</li>
                     <img src="{{item.mainImage.ref}}">
+
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                        <input type="hidden" name="cmd" value="_cart" />
+                        <input type="hidden" name="add" value="1" />
+                        <input type="hidden" name="business" value="example@minicartjs.com" />
+                        <input type="hidden" name="item_name" value="{{item.name}}" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <input type="hidden" name="amount" value="{{item.msrpInCents/100}}" />
+                        <input type="hidden" name="discount_amount" value="1.00" />
+                        <input type="hidden" name="currency_code" value="USD" />
+                        <input type="hidden" name="no_shipping" value="2">
+                        <input type="hidden" name="no_note" value="1">
+                        <input type="hidden" name="shipping2" value="1.50">
+                        <input type="hidden" name="shipping" value="2.50">
+
+                        <input type="submit" name="submit" value="Add to cart" class="button"/>
+                    </form>
+
 				</ul>
         </div>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/minicart/3.0.6/minicart.min.js"></script>
+        <script>
+            paypal.minicart.render();
+        </script>
     </body>
 </html>
