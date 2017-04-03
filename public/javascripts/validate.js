@@ -5,4 +5,12 @@ function validate()
 	{
 		alert("Both checkbox cannot be selected");
 	}
+
+/*
+	var appElement = document.querySelector('[ng-app=myShoppingCartProject]');
+    var $scope = angular.element(appElement).scope();
+    $scope.$apply(function() {
+        $scope.discountPercent = 20;
+    });
+    */
 }

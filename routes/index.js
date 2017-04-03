@@ -1,3 +1,4 @@
+var http = require('http');
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -19,5 +20,51 @@ router.get('/', function(req, res, next) {
         {"id": 9, "name": "Tagtune", "city": "Monywa"},
         {"id": 10, "name": "Centimia", "city": "Retkovci"}]);
 });
- 
+
+ router.get('/products/:usertype/:productid', function(req,res){
+
+/*
+ 	var data = {
+        "products": {
+            "usertype": req.params.usertype,
+            "productid": req.params.productid
+        }
+    }; 
+ */
+	var myProducts;
+	var myJSON;
+
+	myJSON = {
+        "products": {
+            "usertype": req.params.usertype,
+            "productid": req.params.productid
+        }
+    }; 
+       
+
+	//var xmlhttp = new XMLHttpRequest();
+	var url = "http://sneakpeeq-sites.s3.amazonaws.com/interviews/ce/feeds/store.js";
+
+	http.get(url, function(res){
+	    var body = '';
+
+	    res.on('data', function(chunk){
+	        body += chunk;
+	    });
+
+	    res.on('end', function(){
+	        myProducts = JSON.parse(body);
+	        myJSON = body;
+	        console.log("Got a response: ", myProducts.site);
+	    });
+	}).on('error', function(e){
+	      console.log("Got an error: ", e);
+	});
+
+	//var myProducts = JSON.parse(data);
+
+
+	res.status(200).json(myJSON);
+ });
+
 module.exports = router;
